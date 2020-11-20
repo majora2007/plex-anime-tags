@@ -22,7 +22,3 @@ while you wait for this to finish running. Any anime that was not found in Anidb
     - You either need to lower the min_tag_weight in settings.ini or update the genres.csv to include that as an allowed genre.  
 
 
-# TODO:
-- Add Log for failed lookups
-- Ability to map certain tags when found to write Collection tags. (ie tag anime as Isekai collection)
-
