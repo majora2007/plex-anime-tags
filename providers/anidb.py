@@ -26,7 +26,9 @@ def find_id(anime: AniDBTitle):
             if language_code not in allowed_language_codes:
                 continue
 
-            if anime_title == anime.title.lower():
+            lower_title = anime.title.lower()
+
+            if anime_title == lower_title or anime_title == lower_title.replace('\'', '`'):
                 print('Matched on {}'.format(anime_title))
                 return row[0]
 

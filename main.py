@@ -1,3 +1,6 @@
+import logging
+import sys
+
 from plexapi.server import PlexServer
 import configparser
 import pymongo
@@ -16,6 +19,17 @@ anime_cache = Cache(db)
 
 allowed_language_codes = ['en', 'ja', 'x-jat']
 
+logger = logging.getLogger("plex-anime-tags")
+
+def setup_logger():
+    formatter = logging.Formatter('%(asctime)s %(message)s')
+    handler = logging.FileHandler('failed-lookup.log')
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
+    logger.setLevel(logging.INFO)
+
+
 
 
 if __name__ == '__main__':
@@ -23,6 +37,8 @@ if __name__ == '__main__':
     plex = PlexServer(config_parser.get('Plex', 'url'), config_parser.get('Plex', 'token'))
     plex_interface = Plex()
     min_weight = int(config_parser.get('AniDB', 'min_tag_weight'))
+
+    setup_logger()
 
     titles = []
 
@@ -41,6 +57,7 @@ if __name__ == '__main__':
 
         if anime.anidb_id == 0:
             print('Could not find AniDB entry. Skipping.')
+            logger.info(anime.title)
             continue
 
         cached_data = anime_cache.find(anime)
