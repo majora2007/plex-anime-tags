@@ -1,0 +1,10 @@
+[Plex]
+url=http://localhost:32400
+token=XXXXXXXXXXXXXXX
+anime_library=Anime
+
+[AniDB]
+client=yourtokenhere
+clientver=1
+cache_mongodb=mongodb://localhost:27017/
+min_tag_weight=0
