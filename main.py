@@ -47,7 +47,7 @@ if __name__ == '__main__':
         titles.append(AniDBTitle(video.title))
         plex_interface.add_show(video.title, video)
 
-    titles = titles[0:25]
+    #titles = titles[0:25]
 
     # TODO: Should I move the titles loop into anime_library.search() so the video connection can be cleaned up faster
     for anime in titles:
