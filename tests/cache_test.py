@@ -4,7 +4,7 @@ from datetime import datetime, timezone, timedelta
 import mongomock
 
 from cache import Cache
-from models import AniDBTitle
+from models import AniDBTitle, AniDBTag
 
 
 class Test_TestCache(unittest.TestCase):
@@ -13,9 +13,15 @@ class Test_TestCache(unittest.TestCase):
     def setUpClass(cls):
         cls.db = mongomock.MongoClient().db
 
+    def tearDown(self):
+        # Clear db
+        self.db['cache'].remove({})
+
     def test_find(self):
         col = self.db['cache']
         anime = AniDBTitle('Some Anime')
+        anime.tags = [AniDBTag('fanservice', 200)]
+
         for obj in [Cache.create_cache_object(anime)]:
             id = col.insert_one(obj).inserted_id
 
@@ -23,6 +29,7 @@ class Test_TestCache(unittest.TestCase):
         
         self.assertIsNotNone(found_anime)
         self.assertEqual(found_anime._id, id)
+
 
     def test_is_expired(self):
         now = datetime.utcnow()
@@ -35,6 +42,7 @@ class Test_TestCache(unittest.TestCase):
         col = self.db['cache']
         anime = AniDBTitle('Some Anime 123')
         anime.anidb_id = 2
+        anime.tags = [AniDBTag('fanservice', 200)]
 
         id = col.insert_one(Cache.create_cache_object(anime)).inserted_id
 

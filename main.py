@@ -61,7 +61,7 @@ if __name__ == '__main__':
             continue
 
         cached_data = anime_cache.find(anime)
-        if cached_data is not None:
+        if cached_data is not None and len(cached_data.tags) > 0:
             print('Cached, skipping refresh'.format(anime.title))
             anime = cached_data
         else:
