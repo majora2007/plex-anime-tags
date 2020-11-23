@@ -20,5 +20,6 @@ while you wait for this to finish running. Any anime that was not found in Anidb
     - You may need to fetch the latest data dump [here](http://anidb.net/api/anime-titles.dat.gz) and place into  data/anime-titles.dat.
 * Not all tags I want are getting sent to Plex?
     - You either need to lower the min_tag_weight in settings.ini or update the genres.csv to include that as an allowed genre.  
-
-
+* I want one genre to represent multiple tags. How can I do this?
+    - Use genre_map.csv to map multiple tags into other tags. Tags get written in this order: From AniDB, min weight filter, 
+    map, take from plex if genre field is locked, then write to Plex.
